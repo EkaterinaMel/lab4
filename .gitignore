@@ -1,32 +1,59 @@
-# Prerequisites
-*.d
+#include <iostream>
+using namespace std;
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+//вариант 8
+//Дана матрица размером NxM. Упорядочить ее строки по возрастанию суммы их элементов. 
 
-# Precompiled Headers
-*.gch
-*.pch
+	const int N = 6;
+	const int M = 3;
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+void print(int** arr) {
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cout << arr[i][j] << "\t";
+		}
+		cout << endl;
+	}
+}
 
-# Fortran module files
-*.mod
-*.smod
+int main() {
+	setlocale(LC_ALL, "rus");
+	int **arr = new int *[N];
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+	for (int i = 0; i < N; i++) {
+		arr[i] = new int[M];
+	}
 
-# Executables
-*.exe
-*.out
-*.app
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			arr[i][j]=rand()%10;
+		}
+	}
+	cout << "Матрица до преобразования: \n";
+	print(arr);
+
+	int sum=0, sum1=0;
+	int* p = new int [M];
+
+	for(int k = 0; k < N; k++){
+		for (int i = 0; i < N; i++) {
+			for (int j = 0; j < M; j++) {
+				sum += arr[i][j];
+			}
+			if ((i > 0) && (sum < sum1)) {
+				p = arr[i];
+				arr[i] = arr[i -(1)];
+				arr[i -(1)] = p;
+			}
+			else sum1 = sum;
+			sum = 0;
+		}
+}
+
+	cout << "Матрица после преобразования: \n";
+	print(arr);
+
+	for (int i = 0; i < N; i++)
+		delete[] arr[i];
+	delete[] arr;
+}
